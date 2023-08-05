@@ -671,7 +671,7 @@ serverFiles:
       - job_name: python_app
         static_configs:
           - targets:
-            - python-chart-my-python-chart:5000
+            - flask-app:5000
       - job_name: prometheus
         static_configs:
           - targets:
