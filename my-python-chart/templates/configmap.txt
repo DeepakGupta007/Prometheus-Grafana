@@ -1,0 +1,3 @@
+#use this command to create config-map before deploying python-helm chart
+
+#k create cm flask-configmap --from-file=app.py=./my-python-chart/python_apps_with_python_clients/boilerplate.py

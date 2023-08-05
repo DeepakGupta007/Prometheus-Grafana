@@ -36,21 +36,28 @@ spec:
           command:
             - /bin/sh
             - -c
-            - 'sleep 3600'
+            - 'python /app/app.py'
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          # livenessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
-          # readinessProbe:
-          #   httpGet:
-          #     path: /
-          #     port: http
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: my-configmap-volume
+              mountPath: /app/
+      volumes:
+        - name: my-configmap-volume
+          configMap:
+            name: flask-configmap
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
